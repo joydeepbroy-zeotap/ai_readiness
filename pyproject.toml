@@ -1,0 +1,18 @@
+[project]
+name = "mcp-server"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "aiohttp>=3.12.14",
+    "asyncio>=3.4.3",
+    "fastmcp>=2.10.6",
+    "google-cloud-bigquery>=3.35.0",
+    "pydantic>=2.11.7",
+    "pydantic-settings>=2.10.1",
+    "redis>=6.2.0",
+    "structlog>=25.4.0",
+    "tenacity>=9.1.2",
+    "typing>=3.10.0.0",
+]
