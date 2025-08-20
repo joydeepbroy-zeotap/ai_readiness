@@ -124,14 +124,14 @@ class SchemaDiscoveryTool:
         store_columns = schema["stores"][store_type]
         
         # Get metadata for first 10 columns
-        column_names = [col["name"] for col in store_columns[:10]]
-        if column_names:
-            metadata = await self.schema_manager.get_column_metadata(
-                org_id, 
-                column_names
-            )
-        else:
-            metadata = {}
+        column_names = [col["name"] for col in store_columns] #[:10]]
+        # if column_names:
+        #     metadata = await self.schema_manager.get_column_metadata(
+        #         org_id,
+        #         column_names
+        #     )
+        # else:
+        #     metadata = {}
         
         return {
             "org_id": org_id,
@@ -143,11 +143,11 @@ class SchemaDiscoveryTool:
                     "data_type": col.get("dataType"),
                     "attribute_type": col.get("attributeType"),
                     "is_pii": col.get("isRawPII", False),
-                    "metadata": metadata.get(col["name"], {})
+                    # "metadata": metadata.get(col["name"], {})
                 }
-                for col in store_columns[:50]  # Limit to 50 columns
+                for col in store_columns  # Limit to 50 columns
             ],
-            "has_more": len(store_columns) > 50
+            # "has_more": len(store_columns) > 50
         }
     
     async def _get_column_details(

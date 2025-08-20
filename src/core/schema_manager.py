@@ -3,7 +3,7 @@
 from typing import Dict, List, Any, Optional
 import structlog
 
-from ..config import settings, STORE_MAPPING, PII_PATTERNS
+from ..config import settings, STORE_MAPPING, PII_PATTERNS, LOW_CARDINALITY_THRESHOLD
 from .cache_manager import cache_manager
 from .exceptions import ValidationError
 
@@ -130,7 +130,7 @@ class SchemaManager:
     
     def _determine_cardinality(self, count: int) -> str:
         """Determine if column has low or high cardinality."""
-        if count <= settings.LOW_CARDINALITY_THRESHOLD:
+        if count <= LOW_CARDINALITY_THRESHOLD:
             return "LOW"
         return "HIGH"
     

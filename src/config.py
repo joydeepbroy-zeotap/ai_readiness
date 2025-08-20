@@ -11,7 +11,7 @@ load_dotenv()
 
 class Settings(BaseSettings):
     """Application settings."""
-    
+
     # API Configuration
     catalog_api_url: str = Field(
         default="https://unity.zeotap.com/canon/api/v2/orgs/{org_id}/catalog/_search",
@@ -21,7 +21,7 @@ class Settings(BaseSettings):
         default="https://unity.zeotap.com/datamanager/api/v2/catalog/column/metadata",
         alias="METADATA_API_URL"
     )
-    bearer_token: Optional[str] = Field(default="Bearer eyJraWQiOiJHMGZOVWhZWTJVcEJ6dFhCS1F6dEZxMlpPNzdNM1BtYnFOdjFibXgteGFVIiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULnVEME1DMVJWYW9sRE45ZjdjeWNlZDZ3OHVDWWVYWE5GNVg4cWdBVHc3SWcub2FyMXR3Ymd0ZDZXS1ZtR0k0MTciLCJpc3MiOiJodHRwczovL2xvZ2luLnplb3RhcC5jb20vb2F1dGgyL2RlZmF1bHQiLCJhdWQiOiJhcGk6Ly9kZWZhdWx0IiwiaWF0IjoxNzU1MDI1NzczLCJleHAiOjE3NTUwMjkzNzMsImNpZCI6IjBvYTEwajc3eTd3cldvRFZqNDE3IiwidWlkIjoiMDB1MTMzNHEyYXJNajlqVkM0MTciLCJzY3AiOlsib2ZmbGluZV9hY2Nlc3MiLCJwcm9maWxlIiwiZW1haWwiLCJvcGVuaWQiXSwiYXV0aF90aW1lIjoxNzU1MDI1NzcwLCJzdWIiOiJqb3lkZWVwLnJveUB6ZW90YXAuY29tIiwiZW1haWwiOiJqb3lkZWVwLnJveUB6ZW90YXAuY29tIn0.mgBWs4eyWV0m0p98_ggqtY8OU9IAjIfI1Kw_XH-qZdQrfwVMh3Siz07w525ZLp1lR_ITx9IdfCBFMv93ynlCOIwEAoGJtTdGfOGzkMg82fDQIwQGFz8E5W_qe2CqJz7XkgHFODV622ToLf5_C_nL2iOGN-oINJbfQPm4mnlwGja3k_cRmuJ4cQmHy6FMRDnxW64zIG2FaAoDLiGQn5krawHc_vM2dWUg-ZIWv7CN3zqX6esBkCfIAXg0i0nrXAYHBpR8Et6WWPno_Hp7KgxrkYJ6V3_PJWn4klXy5pjYUsos9j31sQKg_S_yjyINUQUDXwmPp4HiaAe2-kk_rmRKtQ", alias="BEARER_TOKEN")
+    bearer_token: Optional[str] = Field(default="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjAxMTM0MTIsImV4cCI6MTY3NTY2NTQxMCwidCI6IjU1NDM4Y2I4ZWZlZjU5MzBjN2FkNGU1MGZhMTAwNjhhIn0.36M7_Ruq48AMay9acmOT95cl9Wx4_FNLzQxjwLBe7b8", alias="BEARER_TOKEN")
     
     # BigQuery Configuration
     bigquery_project: str = Field(default="zeotap-dev-datascience", alias="BIGQUERY_PROJECT")

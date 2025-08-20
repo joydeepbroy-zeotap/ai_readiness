@@ -50,16 +50,12 @@ class MetadataAPI(APIClient):
             raise ValidationError("At least one column is required", field="columns")
             
         # Prepare request payload
-        payload = {
-            "orgId": org_id,
-            "columns": columns,
-            "sampleSize": sample_size
-        }
+        payload = {"columns": columns}
         
         try:
             response = await self._make_request(
                 method="POST",
-                url=self.base_url,
+                url=self.base_url+f"?org={org_id}",
                 json_data=payload
             )
             
