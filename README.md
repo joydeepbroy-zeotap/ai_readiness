@@ -3,6 +3,11 @@
 
 A Model Context Protocol (MCP) server for analyzing Zeotap data features and assessing AI/ML readiness.
 
+## RUN THE MCP SERVER
+```python
+npx @modelcontextprotocol/inspector uv run main.py
+```
+
 ## Features
 
 - **Schema Discovery**: Explore data schemas across different stores
