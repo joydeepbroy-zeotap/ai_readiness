@@ -179,14 +179,29 @@ class SchemaDiscoveryTool:
                 col_names
             )
             
-            # Get cardinality analysis
-            cardinality = await self.metadata_api.analyze_cardinality(
-                org_id,
-                col_names
-            )
+            # Group columns by store type to fetch BigQuery statistics
+            columns_by_store = {}
+            for col in found_columns:
+                store = self.schema_manager._determine_store(col)
+                if store not in columns_by_store:
+                    columns_by_store[store] = []
+                columns_by_store[store].append(col["name"])
+            
+            # Fetch BigQuery statistics for each store type
+            bigquery_stats = {}
+            for store_type, store_columns in columns_by_store.items():
+                try:
+                    stats = await self.metadata_api.get_column_statistics_from_bigquery(
+                        org_id,
+                        store_type,
+                        store_columns
+                    )
+                    bigquery_stats.update(stats)
+                except Exception as e:
+                    logger.warning(f"Failed to get BigQuery stats for {store_type}: {e}")
+                    # Continue without BigQuery stats for this store
         else:
-            metadata = {}
-            cardinality = {}
+            bigquery_stats = {}
         
         return {
             "org_id": org_id,
@@ -197,8 +212,8 @@ class SchemaDiscoveryTool:
                     "data_type": col.get("dataType"),
                     "attribute_type": col.get("attributeType"),
                     "is_pii": col.get("isRawPII", False),
-                    "cardinality": cardinality.get(col["name"], "UNKNOWN"),
-                    "metadata": metadata.get(col["name"], {})
+                    "metadata": metadata.get(col["name"], {}),
+                    "bigquery_statistics": bigquery_stats.get(col["name"], {})
                 }
                 for col in found_columns
             ],

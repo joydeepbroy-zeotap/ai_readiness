@@ -79,6 +79,13 @@ await schema_discovery(
     store_type="profile_store"
 )
 
+# Get detailed column information with BigQuery statistics
+await schema_discovery(
+    org_id="org123",
+    operation="columns",
+    columns=["user_id", "age", "gender"]
+)
+
 # Search for columns
 await schema_discovery(
     org_id="org123",
@@ -186,7 +193,7 @@ mcp-server/
 │   │   └── schema_manager.py # Schema operations
 │   ├── integrations/       # External API integrations
 │   │   ├── catalog_api.py  # Zeotap Catalog API
-│   │   ├── metadata_api.py # Zeotap Metadata API
+│   │   ├── metadata_api.py # Zeotap Metadata API (with BigQuery integration)
 │   │   ├── bigquery_client.py # Google BigQuery
 │   │   └── mock_api.py     # Mock implementations
 │   └── tools/              # MCP tool implementations
@@ -197,6 +204,36 @@ mcp-server/
 ├── tests/                  # Test suite
 ├── main.py                 # Entry point
 └── requirements.txt        # Dependencies
+```
+
+### Column Statistics from BigQuery
+
+The Schema Discovery tool now fetches comprehensive column statistics from BigQuery's `unified_feature_analysis` table when using the `columns` operation. This provides rich statistical information including:
+
+- **Fill rate**: Percentage of non-null values
+- **Data type and mode**: Column data type and nullability
+- **Cardinality metrics**: Distinct count, uniqueness ratio, cardinality category
+- **Percentiles**: Statistical distribution for numeric columns
+- **Sample values**: Example values from the column
+- **User statistics**: Unique users by column values
+- **Event frequency**: For event-based columns
+- **PII and metadata**: Privacy flags and display names
+
+Example response for column details:
+```json
+{
+  "name": "age",
+  "data_type": "INTEGER",
+  "metadata": {...},
+  "bigquery_statistics": {
+    "fill_rate": 92.5,
+    "distinct_count": 95,
+    "cardinality_category": "low",
+    "percentiles": {"0": 18, "25": 25, "50": 35, "75": 45, "100": 89},
+    "is_pii": false,
+    ...
+  }
+}
 ```
 
 ## Development

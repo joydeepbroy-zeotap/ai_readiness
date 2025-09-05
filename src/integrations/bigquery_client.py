@@ -25,21 +25,21 @@ class BigQueryClient:
             
         try:
             # If credentials path is provided, use service account
-            if settings.bigquery_credentials_path:
-                credentials = service_account.Credentials.from_service_account_file(
-                    settings.bigquery_credentials_path
-                )
-                self.client = bigquery.Client(
-                    credentials=credentials,
-                    project=settings.bigquery_project,
-                    location=settings.bigquery_location
-                )
-            else:
+            # if settings.bigquery_credentials_path:
+            #     credentials = service_account.Credentials.from_service_account_file(
+            #         settings.bigquery_credentials_path
+            #     )
+            #     self.client = bigquery.Client(
+            #         credentials=credentials,
+            #         project=settings.bigquery_project,
+            #         location=settings.bigquery_location
+            #     )
+            # else:
                 # Use default credentials (ADC)
-                self.client = bigquery.Client(
-                    project=settings.bigquery_project,
-                    location=settings.bigquery_location
-                )
+            self.client = bigquery.Client(
+                project=settings.bigquery_project,
+                location=settings.bigquery_location
+            )
                 
             logger.info(f"Connected to BigQuery project: {settings.bigquery_project}")
             

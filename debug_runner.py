@@ -27,23 +27,31 @@ async def debug_schema_discovery():
     tool = SchemaDiscoveryTool()
     
     # Test 1: Overview
+    # result = await tool.run(
+    #     org_id="1831",
+    #     operation="overview"
+    # )
+    # print(f"Overview result: {result}")
+    #
+    # # Test 2: Store schema
+    # result = await tool.run(
+    #     org_id="1831",
+    #     operation="store",
+    #     store_type="profile_store"
+    # )
+    # print(f"Store schema result: {result}")
+
+    # Test 3: get column details
     result = await tool.run(
-        org_id="1914",
-        operation="overview"
+        org_id="1831",
+        operation="columns",
+        columns=["gender","annual_income","optician_type"]
     )
-    print(f"Overview result: {result}")
+    print(f"Column Details result: {result}")
     
-    # Test 2: Store schema
+    # Test 4: Search columns
     result = await tool.run(
-        org_id="1914",
-        operation="store",
-        store_type="profile_store"
-    )
-    print(f"Store schema result: {result}")
-    
-    # Test 3: Search columns
-    result = await tool.run(
-        org_id="test_org_123",
+        org_id="1831",
         operation="search",
         search_query="user"
     )
